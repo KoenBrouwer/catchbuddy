@@ -16,7 +16,10 @@
         "format": "prettier --write .",
         "check-exports": "attw --pack . --profile esm-only",
         "build": "tsup",
-        "ci": "pnpm lint && pnpm check-format && pnpm test && pnpm build && pnpm check-exports"
+        "change": "changeset",
+        "ci": "pnpm lint && pnpm check-format && pnpm test && pnpm build && pnpm check-exports",
+        "local-release": "changeset version && changeset publish",
+        "prepublishOnly": "pnpm run ci"
     },
     "author": {
         "name": "Koen Brouwer",
@@ -61,6 +64,7 @@
     },
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.17.4",
+        "@changesets/cli": "^2.28.1",
         "prettier": "^3.5.2",
         "tsup": "^8.4.0",
         "vitest": "^3.0.7"
