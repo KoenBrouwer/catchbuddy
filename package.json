@@ -1,0 +1,68 @@
+{
+    "name": "catchbuddy",
+    "version": "0.0.0",
+    "description": "Simplify error handling in JavaScript with a lightweight utility that organizes results and errors for both synchronous and asynchronous operations.",
+    "keywords": [
+        "resolve",
+        "try-catch",
+        "error-handling",
+        "async-errors"
+    ],
+    "scripts": {
+        "dev": "tsx watch src/sandbox.ts",
+        "test": "vitest",
+        "lint": "tsc",
+        "check-format": "prettier --check .",
+        "format": "prettier --write .",
+        "check-exports": "attw --pack . --profile esm-only",
+        "build": "tsup",
+        "ci": "pnpm lint && pnpm check-format && pnpm test && pnpm build && pnpm check-exports"
+    },
+    "author": {
+        "name": "Koen Brouwer",
+        "url": "https://github.com/koenbrouwer"
+    },
+    "license": "MIT",
+    "packageManager": "pnpm@10.5.2",
+    "homepage": "https://github.com/koenbrouwer/catchbuddy",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/koenbrouwer/catchbuddy.git"
+    },
+    "bugs": {
+        "url": "https://github.com/koenbrouwer/catchbuddy/issues"
+    },
+    "type": "module",
+    "main": "dist/index.js",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "tsup": {
+        "entry": [
+            "src/index.ts"
+        ],
+        "format": [
+            "esm"
+        ],
+        "dts": true,
+        "clean": true,
+        "minify": true,
+        "target": "esnext",
+        "outDir": "dist"
+    },
+    "dependencies": {
+        "typescript": "^5.7.3"
+    },
+    "devDependencies": {
+        "@arethetypeswrong/cli": "^0.17.4",
+        "prettier": "^3.5.2",
+        "tsup": "^8.4.0",
+        "vitest": "^3.0.7"
+    }
+}
