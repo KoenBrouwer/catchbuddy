@@ -11,14 +11,15 @@
     "scripts": {
         "dev": "tsx watch src/sandbox.ts",
         "test": "vitest",
+        "test:run": "vitest run",
         "lint": "tsc",
         "check-format": "prettier --check .",
         "format": "prettier --write .",
         "check-exports": "attw --pack . --profile esm-only",
         "build": "tsup",
         "change": "changeset",
-        "ci": "pnpm lint && pnpm check-format && pnpm test && pnpm build && pnpm check-exports",
-        "local-release": "changeset version && changeset publish",
+        "ci": "pnpm lint && pnpm check-format && pnpm test:run && pnpm build && pnpm check-exports",
+        "local-release": "changeset version",
         "prepublishOnly": "pnpm run ci"
     },
     "author": {
