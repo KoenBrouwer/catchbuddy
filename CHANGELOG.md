@@ -1,5 +1,11 @@
 # catchbuddy
 
+## 0.1.1
+
+### Patch Changes
+
+- abb4fb5: Removed dependency on Typescript
+
 ## 0.1.0
 
 ### Minor Changes
