@@ -1,5 +1,11 @@
 # catchbuddy
 
+## 0.2.0
+
+### Minor Changes
+
+- Improved error handling for non-Error type errors.
+
 ## 0.1.1
 
 ### Patch Changes

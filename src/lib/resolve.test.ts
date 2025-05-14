@@ -25,7 +25,9 @@ describe("resolve", () => {
 
         expect(result).toBeUndefined();
         expect(err).toBeInstanceOf(Error);
-        expect(err?.message).toBe("string error");
+        expect(err?.message).toBe(
+            `An error of type "string" was thrown: string error`,
+        );
     });
 
     it("handles asynchronous functions that throw", async () => {
@@ -84,21 +86,25 @@ describe("resolve", () => {
 
         expect(result).toBeUndefined();
         expect(err).toBeInstanceOf(Error);
-        expect(err?.message).toBe("42");
+        expect(err?.message).toBe(`An error of type "number" was thrown: 42`);
 
         const booleanPromise = Promise.reject(false);
         const [errBool, resultBool] = await resolve(booleanPromise);
 
         expect(resultBool).toBeUndefined();
         expect(errBool).toBeInstanceOf(Error);
-        expect(errBool?.message).toBe("false");
+        expect(errBool?.message).toBe(
+            `An error of type "boolean" was thrown: false`,
+        );
 
         const objectPromise = Promise.reject({ message: "Custom error" });
         const [errObj, resultObj] = await resolve(objectPromise);
 
         expect(resultObj).toBeUndefined();
         expect(errObj).toBeInstanceOf(Error);
-        expect(errObj?.message).toBe("[object Object]");
+        expect(errObj?.message).toBe(
+            `An error of type "object" was thrown: {\"message\":\"Custom error\"}`,
+        );
     });
 
     it("handles asynchronous functions with delayed rejection", async () => {
@@ -143,7 +149,9 @@ describe("resolveSync", () => {
 
         expect(result).toBeUndefined();
         expect(err).toBeInstanceOf(Error);
-        expect(err?.message).toBe("string error");
+        expect(err?.message).toBe(
+            'An error of type "string" was thrown: string error',
+        );
     });
 
     it("handles synchronous functions that throw errors with arguments", () => {
