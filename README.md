@@ -1,12 +1,17 @@
 # Welcome to CatchBuddy! 👋🏻
 
+[![Version](https://img.shields.io/npm/v/catchbuddy.svg)](https://www.npmjs.com/package/catchbuddy)
+
 This package is a wrapper around a common pattern in Javascript: the try/catch statement.
 
 # Quick start
 
 ## Installation
 
-Use your favorite package manager to install CatchBuddy.
+Use your favorite package manager to install [CatchBuddy](https://www.npmjs.com/package/catchbuddy).
+
+This is a [Node.js](https://nodejs.org/en/) package available through the [npm registry](https://nodejs.org/en/).
+You can install `catchbuddy` with the [`npm install` command](https://docs.npmjs.com/downloading-and-installing-packages-locally):
 
 ```bash
 npm install catchbuddy
