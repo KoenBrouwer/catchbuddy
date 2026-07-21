@@ -107,6 +107,16 @@ describe("resolve", () => {
         );
     });
 
+    it("handles rejection with a circular object without throwing", async () => {
+        const circular: Record<string, unknown> = {};
+        circular.self = circular;
+        const [err, result] = await resolve(Promise.reject(circular));
+
+        expect(result).toBeUndefined();
+        expect(err).toBeInstanceOf(Error);
+        expect(err?.message).toContain(`An error of type "object" was thrown:`);
+    });
+
     it("handles asynchronous functions with delayed rejection", async () => {
         const delayedFn = () =>
             new Promise((_, reject) => {

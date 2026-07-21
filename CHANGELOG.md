@@ -1,5 +1,11 @@
 # catchbuddy
 
+## 0.2.1
+
+### Patch Changes
+
+- Guard against non-serializable thrown values (circular references, BigInt) so `resolve`/`resolveSync` never throw while normalizing a non-Error rejection. Also fixed README `resolveSync` examples that invoked the function instead of passing it, and minor doc typos.
+
 ## 0.2.0
 
 ### Minor Changes

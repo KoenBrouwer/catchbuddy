@@ -32,7 +32,7 @@ try {
 ```
 
 If you plan on keeping your application as simple as this, you might not need `catchbuddy`.
-Once you start adding more calls that might throw, handling errors become messy really quickly.
+Once you start adding more calls that might throw, handling errors becomes messy really quickly.
 
 ```javascript
 try {
@@ -87,7 +87,7 @@ try {
     console.error(err);
 }
 
-// result1, result2 and result2 are undefined here.
+// result1, result2 and result3 are undefined here.
 doSomethingWithResults(result1, result2, result3);
 ```
 
@@ -98,9 +98,9 @@ Let's apply `resolveSync` from CatchBuddy on the last example.
 ```javascript
 import { resolveSync } from "catchbuddy";
 
-const [err1, result1] = resolveSync(mightThrow());
-const [err2, result2] = resolveSync(mightThrowSomeError());
-const [err3, result3] = resolveSync(mightThrowAnotherError());
+const [err1, result1] = resolveSync(mightThrow);
+const [err2, result2] = resolveSync(mightThrowSomeError);
+const [err3, result3] = resolveSync(mightThrowAnotherError);
 
 if (err1) {
     console.error("We have a problem with mightThrow.", err1);

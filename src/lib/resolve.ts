@@ -3,10 +3,42 @@ export type Result<TResult, TError = Error> =
     | [undefined, TResult];
 
 /**
+ * Normalizes an unknown thrown value into an `Error` instance.
+ *
+ * If the value is already an `Error`, it is returned as-is. Otherwise a
+ * descriptive `Error` is created that includes the value's type and a string
+ * representation of it.
+ *
+ * @param {unknown} err - The thrown value to normalize.
+ * @returns {Error} An `Error` describing the thrown value.
+ */
+function normalizeError(err: unknown): Error {
+    if (err instanceof Error) {
+        return err;
+    }
+
+    // Create a more descriptive error for non-Error objects
+    const errorType = err === null ? "null" : typeof err;
+    let errorMessage = String(err);
+    if (errorType === "object") {
+        try {
+            errorMessage = JSON.stringify(err);
+        } catch {
+            // Fall back to String(err) for circular or otherwise
+            // non-serializable objects.
+            errorMessage = String(err);
+        }
+    }
+    return new Error(
+        `An error of type "${errorType}" was thrown: ${errorMessage}`,
+    );
+}
+
+/**
  * Resolves a given asynchronous function, returning a result in a tuple format.
  *
  * @template T
- * @param {Promise<T>} promise - The asynchronous function to resolve.
+ * @param {Promise<T>} promise - The promise to resolve.
  * @returns {Promise<Result<T>>} A promise that resolves to a tuple where the first element is an error object (if the promise was rejected) or `undefined`, and the second element is the data (if resolved successfully) or `undefined`.
  */
 export async function resolve<T>(promise: Promise<T>): Promise<Result<T>> {
@@ -14,22 +46,7 @@ export async function resolve<T>(promise: Promise<T>): Promise<Result<T>> {
         const data = await promise;
         return [undefined, data];
     } catch (err) {
-        if (err instanceof Error) {
-            return [err, undefined];
-        }
-
-        // Create a more descriptive error for non-Error objects
-        const errorType = err === null ? "null" : typeof err;
-        let errorMessage = String(err);
-        if (errorType === "object") {
-            errorMessage = JSON.stringify(err);
-        }
-        return [
-            new Error(
-                `An error of type "${errorType}" was thrown: ${errorMessage}`,
-            ),
-            undefined,
-        ];
+        return [normalizeError(err), undefined];
     }
 }
 
@@ -54,21 +71,6 @@ export const resolveSync = <T = unknown, Args extends unknown[] = never[]>(
         const data = fn(...args);
         return [undefined, data];
     } catch (err) {
-        if (err instanceof Error) {
-            return [err, undefined];
-        }
-
-        // Create a more descriptive error for non-Error objects
-        const errorType = err === null ? "null" : typeof err;
-        let errorMessage = String(err);
-        if (errorType === "object") {
-            errorMessage = JSON.stringify(err);
-        }
-        return [
-            new Error(
-                `An error of type "${errorType}" was thrown: ${errorMessage}`,
-            ),
-            undefined,
-        ];
+        return [normalizeError(err), undefined];
     }
 };
